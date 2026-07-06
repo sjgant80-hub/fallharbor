@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FallHarbor · estate directory · AI-Native Solutions</title>
+<meta name="description" content="Sovereign registry for AI-Native Solutions tools. Fork lineage · peer estates · manifest-driven directory.">
+<meta name="author" content="AI-Native Solutions">
+<meta name="theme-color" content="#1a1a1e">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%231a1a1e'/%3E%3Ctext x='16' y='23' font-family='serif' font-size='20' fill='%237a9c7e' text-anchor='middle'%3E%E2%9A%93%3C/text%3E%3C/svg%3E">
+<link rel="manifest" href="manifest.webmanifest">
+<style>
+:root{--void:#1a1a1e;--deep:#212127;--surface:#2a2a30;--raised:#33333a;--line:rgba(232,228,219,0.08);--line2:rgba(232,228,219,0.16);--text:#e8e4db;--muted:#928d80;--dim:#6b6660;--sage:#7a9c7e;--sage-dim:rgba(122,156,126,0.14);--amber:#d4a052;--amber-dim:rgba(212,160,82,0.12);--coral:#d67a5a;--serif:'Cormorant Garamond','Iowan Old Style',Georgia,serif;--sans:'Inter',-apple-system,system-ui,sans-serif;--mono:'JetBrains Mono','IBM Plex Mono',monospace}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:var(--void);color:var(--text);font-family:var(--sans);font-size:14.5px;line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100vh}
+button{font-family:inherit;cursor:pointer;border:none;outline:none;background:none;color:inherit}
+input{font-family:inherit;background:transparent;color:var(--text);border:none;outline:none;width:100%}
+a{color:var(--sage);text-decoration:none}
+a:hover{text-decoration:underline}
+h1,h2,h3{font-family:var(--serif);font-weight:400;color:var(--text);line-height:1.2}
+h1{font-size:34px;letter-spacing:0.01em}
+h1 em{color:var(--sage);font-style:italic}
+h2{font-size:22px;margin-bottom:10px}
+h2 em{color:var(--sage);font-style:italic}
+h3{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:0.14em;font-family:var(--mono);font-weight:500;margin-bottom:8px}
+.topbar{background:rgba(26,26,30,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:14px 24px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:50;gap:14px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-size:22px;color:var(--text)}
+.brand .glyph{color:var(--sage);font-size:22px}
+.brand .co{color:var(--dim);font-family:var(--mono);font-size:9.5px;letter-spacing:0.16em;margin-left:6px;text-transform:uppercase}
+.claim{color:var(--muted);font-family:var(--mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;flex:1;text-align:center}
+.claim em{color:var(--sage);font-style:normal}
+.tabs{display:flex;gap:4px}
+.tab{color:var(--muted);padding:8px 14px;border-radius:8px;font-family:var(--mono);font-size:10.5px;letter-spacing:0.14em;text-transform:uppercase;transition:all .15s}
+.tab:hover{color:var(--text)}
+.tab.on{background:var(--sage-dim);color:var(--sage)}
+main{padding:24px;max-width:1200px;margin:0 auto;width:100%}
+.view{display:none}
+.view.on{display:block}
+.hero{margin-bottom:26px}
+.hero .sub{color:var(--muted);font-family:var(--serif);font-size:18px;font-style:italic;max-width:640px;margin-top:6px;line-height:1.5}
+.meta-row{display:flex;gap:20px;flex-wrap:wrap;margin-top:16px;font-family:var(--mono);font-size:10.5px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase}
+.meta-row span strong{color:var(--sage);font-weight:600}
+.filters{background:var(--deep);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:24px;display:grid;grid-template-columns:1fr auto auto auto;gap:12px;align-items:center}
+@media(max-width:800px){.filters{grid-template-columns:1fr}}
+.search-wrap{position:relative}
+.search-wrap input{background:var(--surface);padding:10px 14px 10px 34px;border-radius:8px;font-size:14px;border:1px solid transparent}
+.search-wrap input:focus{border-color:var(--sage-dim)}
+.search-wrap::before{content:'⌕';position:absolute;left:12px;top:9px;color:var(--muted);font-size:16px}
+.pill-group{display:flex;gap:4px;flex-wrap:wrap}
+.pill{padding:7px 12px;border:1px solid var(--line2);border-radius:16px;font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);transition:all .12s;cursor:pointer}
+.pill:hover{color:var(--text);border-color:var(--sage-dim)}
+.pill.on{background:var(--sage-dim);color:var(--sage);border-color:var(--sage)}
+.pill.amber.on{background:var(--amber-dim);color:var(--amber);border-color:var(--amber)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.cat-section{margin-bottom:30px}
+.cat-heading{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.cat-heading .n{font-family:var(--serif);font-size:22px;color:var(--text)}
+.cat-heading .n em{color:var(--sage);font-style:italic}
+.cat-heading .c{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:0.14em;text-transform:uppercase}
+.cat-heading .desc{font-family:var(--mono);font-size:9.5px;color:var(--dim);letter-spacing:0.1em;text-transform:uppercase;flex:1;margin-left:14px}
+.card{background:var(--deep);border:1px solid var(--line);border-radius:12px;padding:16px 18px;cursor:pointer;transition:all .15s;position:relative}
+.card:hover{border-color:var(--sage);transform:translateY(-1px);box-shadow:0 6px 24px rgba(0,0,0,0.25)}
+.card .top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:6px}
+.card .nm{font-family:var(--serif);font-size:19px;color:var(--text);display:flex;align-items:center;gap:8px}
+.card .glyph{color:var(--sage);font-size:19px}
+.card .badges{display:flex;gap:4px;align-items:center}
+.badge{font-family:var(--mono);font-size:9px;letter-spacing:0.14em;text-transform:uppercase;padding:2px 7px;border-radius:10px;background:var(--surface);color:var(--muted)}
+.badge.public{background:var(--sage-dim);color:var(--sage)}
+.badge.private{background:var(--amber-dim);color:var(--amber)}
+.badge.fork{background:rgba(122,156,126,0.08);color:var(--sage-dim);color:var(--sage)}
+.card .desc{color:var(--muted);font-size:12.5px;line-height:1.5;margin-bottom:10px}
+.card .caps{display:flex;flex-wrap:wrap;gap:4px}
+.cap{font-family:var(--mono);font-size:9px;letter-spacing:0.08em;color:var(--dim);background:var(--surface);padding:2px 6px;border-radius:8px}
+.empty{text-align:center;padding:60px 20px;color:var(--muted);font-family:var(--serif);font-style:italic;font-size:18px}
+.detail-modal{position:fixed;inset:0;background:rgba(26,26,30,0.85);backdrop-filter:blur(8px);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
+.detail-modal.on{display:flex}
+.detail-modal .box{background:var(--deep);border:1px solid var(--line2);border-radius:16px;padding:28px;max-width:640px;width:100%;max-height:90vh;overflow-y:auto}
+.detail-modal .box::-webkit-scrollbar{width:6px}
+.detail-modal .box::-webkit-scrollbar-thumb{background:var(--surface);border-radius:3px}
+.detail-modal .head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;gap:12px}
+.detail-modal h2{font-size:28px}
+.detail-modal .close{font-family:var(--mono);color:var(--muted);padding:6px 12px;border:1px solid var(--line2);border-radius:8px;font-size:11px;letter-spacing:0.14em;text-transform:uppercase}
+.detail-modal .close:hover{color:var(--text);border-color:var(--sage)}
+.detail-modal .desc{color:var(--muted);font-family:var(--serif);font-style:italic;font-size:16px;margin-bottom:20px;line-height:1.5}
+.detail-modal .row{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);align-items:baseline}
+.detail-modal .row:last-child{border:none}
+.detail-modal .k{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:0.14em;text-transform:uppercase;min-width:120px}
+.detail-modal .v{color:var(--text);font-size:13.5px;flex:1;word-break:break-word}
+.detail-modal .v a{color:var(--sage);font-family:var(--mono);font-size:12px}
+.detail-modal .actions{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+.detail-modal .actions a{background:var(--sage);color:var(--void);padding:10px 18px;border-radius:8px;font-family:var(--mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;font-weight:600;text-decoration:none}
+.detail-modal .actions a.ghost{background:transparent;color:var(--text);border:1px solid var(--line2)}
+.detail-modal .actions a:hover{opacity:0.85;text-decoration:none}
+.lineage-wrap{background:var(--deep);border:1px solid var(--line);border-radius:14px;padding:20px 24px;overflow-x:auto}
+.lineage-tree{font-family:var(--mono);font-size:13px;line-height:1.9;white-space:pre;color:var(--text)}
+.lineage-tree .root{color:var(--amber);font-weight:600}
+.lineage-tree .node{color:var(--sage);cursor:pointer;transition:all .12s}
+.lineage-tree .node:hover{color:var(--amber);text-decoration:underline}
+.lineage-tree .priv{color:var(--muted)}
+.lineage-tree .cat{color:var(--dim);font-size:11px}
+.peers-section{background:var(--deep);border:1px solid var(--line);border-radius:14px;padding:24px}
+.peers-section .empty-peers{text-align:center;padding:30px 20px;color:var(--muted);font-style:italic;font-family:var(--serif);font-size:16px}
+.peers-section .empty-peers .hint{margin-top:14px;font-family:var(--mono);font-size:11px;color:var(--dim);letter-spacing:0.1em;text-transform:uppercase;font-style:normal}
+.about-card{background:var(--deep);border:1px solid var(--line);border-radius:14px;padding:22px 26px;margin-bottom:18px}
+.about-card p{color:var(--text);margin-bottom:12px;font-size:14.5px;line-height:1.65}
+.about-card p:last-child{margin-bottom:0}
+.about-card code{font-family:var(--mono);background:var(--surface);padding:2px 6px;border-radius:4px;font-size:12.5px;color:var(--sage)}
+.sig-block{margin-top:16px;padding:14px 16px;background:var(--surface);border-radius:10px;font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:0.08em}
+.sig-block .k{color:var(--sage);text-transform:uppercase;letter-spacing:0.14em;font-size:9.5px;margin-right:8px}
+.sig-block .unsigned{color:var(--amber)}
+.footer{text-align:center;color:var(--dim);font-family:var(--mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;padding:30px 20px}
+.footer a{color:var(--sage)}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><span class="glyph">⚓</span>FallHarbor<span class="co">AI-Native Solutions</span></div>
+  <div class="claim">estate directory · <em>fork lineage</em> · peer discovery</div>
+  <nav class="tabs">
+    <button class="tab on" data-view="directory">Directory</button>
+    <button class="tab" data-view="lineage">Lineage</button>
+    <button class="tab" data-view="peers">Peers</button>
+    <button class="tab" data-view="about">About</button>
+  </nav>
+</header>
+<main>
+  <section class="view on" id="view-directory">
+    <div class="hero">
+      <h1>the <em>estate</em>, indexed</h1>
+      <div class="sub">Every AI-Native Solutions tool with its metadata, capabilities, and fork lineage. Search, filter, click through.</div>
+      <div class="meta-row" id="meta-row"></div>
+    </div>
+    <div class="filters">
+      <div class="search-wrap"><input type="text" id="q" placeholder="search tools · name · capability · description"></div>
+      <div class="pill-group" id="vis-pills">
+        <button class="pill on" data-vis="all">All</button>
+        <button class="pill" data-vis="public">Public</button>
+        <button class="pill amber" data-vis="private">Private</button>
+      </div>
+      <div class="pill-group" id="cat-pills"></div>
+      <button class="pill" id="download-btn">⤓ manifest.json</button>
+    </div>
+    <div id="dir-body"></div>
+  </section>
+  <section class="view" id="view-lineage">
+    <div class="hero">
+      <h1>fork <em>lineage</em></h1>
+      <div class="sub">Tools grouped by ancestry. Substrate at the root, downstream forks nested below. Click any node to see full metadata.</div>
+    </div>
+    <div class="lineage-wrap"><div class="lineage-tree" id="lineage-tree"></div></div>
+  </section>
+  <section class="view" id="view-peers">
+    <div class="hero">
+      <h1>peer <em>estates</em></h1>
+      <div class="sub">Other sovereign AI-Native operators publishing FallHarbor-compatible manifests. Add yours by opening a PR against this repo.</div>
+    </div>
+    <div class="peers-section" id="peers-body"></div>
+  </section>
+  <section class="view" id="view-about">
+    <div class="hero"><h1>about <em>FallHarbor</em></h1></div>
+    <div class="about-card">
+      <p>FallHarbor is a sovereign estate directory. The source of truth is <code>manifest.json</code> in this repo · this page reads it and renders the directory you see.</p>
+      <p>Every tool declares its category, capabilities, license, live URL, source repo, and — critically — <code>forks_from</code>, so provenance is machine-readable. A tool with many downstream forks is load-bearing substrate for the estate.</p>
+      <p>Any operator can publish a compatible manifest. Fork this repo, edit <code>manifest.json</code>, publish via Pages, and other FallHarbor deployments can add you to <code>peer_estates</code>.</p>
+      <p>The manifest is optionally signed with <a href="https://sjgant80-hub.github.io/fallsignature/" target="_blank" rel="noopener">FallSignature</a> (Ed25519 · Web Crypto native). The signature slot is <code>provenance.signature</code>.</p>
+    </div>
+    <div class="about-card">
+      <h3>operator</h3>
+      <div class="sig-block" id="operator-block"></div>
+      <h3 style="margin-top:16px">provenance</h3>
+      <div class="sig-block" id="prov-block"></div>
+    </div>
+  </section>
+  <div class="footer">◊ MIT · <a href="./manifest.json">manifest.json</a> · <a href="./schema.json">schema.json</a> · <a href="https://github.com/sjgant80-hub/fallharbor" target="_blank" rel="noopener">source</a></div>
+</main>
+<div class="detail-modal" id="detail-modal">
+  <div class="box" id="detail-box"></div>
+</div>
+<script type="module">
+const $=(id)=>document.getElementById(id);
+const esc=(s)=>String(s==null?'':s).replace(/[<>&"']/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&#39;'}[c]));
+let MANIFEST=null;
+let filters={q:'',vis:'all',cat:'all'};
+
+async function load(){
+  try{
+    const r=await fetch('./manifest.json',{cache:'no-cache'});
+    MANIFEST=await r.json();
+  }catch(e){
+    $('dir-body').innerHTML='<div class="empty">could not load manifest.json · '+esc(e.message)+'</div>';
+    return;
+  }
+  renderMeta();renderCatPills();renderDirectory();renderLineage();renderPeers();renderAbout();
+}
+
+function renderMeta(){
+  const total=MANIFEST.tools.length;
+  const pub=MANIFEST.tools.filter(t=>t.public).length;
+  const priv=total-pub;
+  const cats=new Set(MANIFEST.tools.map(t=>t.category)).size;
+  const forks=MANIFEST.tools.filter(t=>t.forks_from).length;
+  $('meta-row').innerHTML=`
+    <span><strong>${total}</strong> tools</span>
+    <span><strong>${pub}</strong> public</span>
+    <span><strong>${priv}</strong> private</span>
+    <span><strong>${cats}</strong> categories</span>
+    <span><strong>${forks}</strong> forks</span>
+    <span>lineage · gen <strong>${MANIFEST.lineage.generation}</strong></span>
+    <span>root · <strong>${esc(MANIFEST.lineage.root)}</strong></span>`;
+}
+
+function renderCatPills(){
+  const el=$('cat-pills');
+  const cats=MANIFEST.categories||[];
+  el.innerHTML='<button class="pill on" data-cat="all">All</button>'+cats.map(c=>`<button class="pill" data-cat="${esc(c.slug)}">${esc(c.name)}</button>`).join('');
+  el.querySelectorAll('.pill').forEach(p=>p.addEventListener('click',()=>{
+    el.querySelectorAll('.pill').forEach(x=>x.classList.remove('on'));p.classList.add('on');
+    filters.cat=p.dataset.cat;renderDirectory();
+  }));
+}
+
+function match(t){
+  if(filters.vis==='public'&&!t.public)return false;
+  if(filters.vis==='private'&&t.public)return false;
+  if(filters.cat!=='all'&&t.category!==filters.cat)return false;
+  const q=filters.q.trim().toLowerCase();
+  if(!q)return true;
+  return t.name.toLowerCase().includes(q)||(t.description||'').toLowerCase().includes(q)||(t.capabilities||[]).some(c=>c.toLowerCase().includes(q))||t.category.toLowerCase().includes(q)||t.slug.toLowerCase().includes(q);
+}
+
+function renderDirectory(){
+  const el=$('dir-body');
+  const matched=MANIFEST.tools.filter(match);
+  if(!matched.length){el.innerHTML='<div class="empty">no tools match those filters</div>';return;}
+  const cats=MANIFEST.categories||[];
+  const html=cats.map(c=>{
+    const items=matched.filter(t=>t.category===c.slug);
+    if(!items.length)return '';
+    return `<section class="cat-section"><div class="cat-heading"><span class="n">${esc(c.name)}</span><span class="desc">${esc(c.desc||'')}</span><span class="c">${items.length} · ${esc(c.slug)}</span></div><div class="grid">${items.map(cardHtml).join('')}</div></section>`;
+  }).join('');
+  el.innerHTML=html||'<div class="empty">no tools in matching categories</div>';
+  el.querySelectorAll('.card').forEach(c=>c.addEventListener('click',()=>openDetail(c.dataset.slug)));
+}
+
+function cardHtml(t){
+  const caps=(t.capabilities||[]).slice(0,4).map(c=>`<span class="cap">${esc(c)}</span>`).join('');
+  const forkBadge=t.forks_from?`<span class="badge fork">↳ ${esc(t.forks_from)}</span>`:'';
+  const visBadge=t.public?'<span class="badge public">public</span>':'<span class="badge private">private</span>';
+  return `<div class="card" data-slug="${esc(t.slug)}">
+    <div class="top"><div class="nm"><span class="glyph">${esc(t.glyph||'◊')}</span>${esc(t.name)}</div><div class="badges">${visBadge}</div></div>
+    <div class="desc">${esc(t.description||'')}</div>
+    <div class="caps">${caps}${forkBadge}</div>
+  </div>`;
+}
+
+function openDetail(slug){
+  const t=MANIFEST.tools.find(x=>x.slug===slug);if(!t)return;
+  const caps=(t.capabilities||[]).map(c=>`<span class="cap">${esc(c)}</span>`).join(' ');
+  const forks=(t.forks||[]).map(f=>`<a href="#" data-slug="${esc(f)}" class="fork-link">${esc(f)}</a>`).join(', ')||'<span style="color:var(--dim)">none</span>';
+  const forksFrom=t.forks_from?`<a href="#" data-slug="${esc(t.forks_from)}" class="fork-link">${esc(t.forks_from)}</a>`:'<span style="color:var(--dim)">root (no ancestor)</span>';
+  $('detail-box').innerHTML=`
+    <div class="head"><div><h2><span style="color:var(--sage)">${esc(t.glyph||'◊')}</span> ${esc(t.name)}</h2><div style="font-family:var(--mono);font-size:10.5px;color:var(--muted);letter-spacing:0.14em;text-transform:uppercase;margin-top:4px">${esc(t.category)} · ${t.public?'public':'private'} · ${esc(t.license)}</div></div><button class="close" id="close-detail">Close</button></div>
+    <div class="desc">${esc(t.description||'')}</div>
+    <div class="row"><div class="k">Slug</div><div class="v"><code style="font-family:var(--mono);color:var(--sage)">${esc(t.slug)}</code></div></div>
+    <div class="row"><div class="k">Category</div><div class="v">${esc(t.category)}</div></div>
+    <div class="row"><div class="k">Capabilities</div><div class="v">${caps||'<span style="color:var(--dim)">none declared</span>'}</div></div>
+    <div class="row"><div class="k">License</div><div class="v">${esc(t.license)}</div></div>
+    <div class="row"><div class="k">Visibility</div><div class="v">${t.public?'public · everyone can use':'private · estate-only'}</div></div>
+    <div class="row"><div class="k">Shipped</div><div class="v">${esc(t.shipped)}</div></div>
+    <div class="row"><div class="k">Forks from</div><div class="v">${forksFrom}</div></div>
+    <div class="row"><div class="k">Downstream forks</div><div class="v">${forks}</div></div>
+    <div class="row"><div class="k">Live</div><div class="v"><a href="${esc(t.url)}" target="_blank" rel="noopener">${esc(t.url)}</a></div></div>
+    <div class="row"><div class="k">Source</div><div class="v"><a href="${esc(t.repo)}" target="_blank" rel="noopener">${esc(t.repo)}</a></div></div>
+    <div class="actions"><a href="${esc(t.url)}" target="_blank" rel="noopener">Open live ↗</a><a href="${esc(t.repo)}" target="_blank" rel="noopener" class="ghost">View source ↗</a></div>`;
+  $('detail-modal').classList.add('on');
+  $('close-detail').addEventListener('click',closeDetail);
+  $('detail-box').querySelectorAll('.fork-link').forEach(a=>a.addEventListener('click',(e)=>{e.preventDefault();openDetail(a.dataset.slug);}));
+}
+function closeDetail(){$('detail-modal').classList.remove('on');}
+$('detail-modal').addEventListener('click',(e)=>{if(e.target.id==='detail-modal')closeDetail();});
+
+function renderLineage(){
+  const el=$('lineage-tree');
+  const tools=MANIFEST.tools;
+  const roots=tools.filter(t=>!t.forks_from);
+  const orphans=tools.filter(t=>t.forks_from&&!tools.find(x=>x.slug===t.forks_from));
+  function line(t,depth,last){
+    const prefix=depth===0?'':' '.repeat((depth-1)*2)+(last?'└─ ':'├─ ');
+    const vis=t.public?'':'<span class="priv"> · private</span>';
+    return `${prefix}<span class="node" data-slug="${esc(t.slug)}">${esc(t.glyph||'◊')} ${esc(t.name)}</span> <span class="cat">[${esc(t.category)}]</span>${vis}\n`;
+  }
+  function walk(t,depth,last){
+    let out=line(t,depth,last);
+    const kids=(t.forks||[]).map(s=>tools.find(x=>x.slug===s)).filter(Boolean);
+    kids.forEach((k,i)=>{out+=walk(k,depth+1,i===kids.length-1);});
+    return out;
+  }
+  let out=`<span class="root">◇ ${esc(MANIFEST.lineage.root)} · generation ${MANIFEST.lineage.generation}</span>\n`;
+  roots.forEach((r,i)=>{out+=walk(r,1,i===roots.length-1&&!orphans.length);});
+  if(orphans.length){
+    out+='\n<span class="root">◇ orphan forks (ancestor outside this estate)</span>\n';
+    orphans.forEach((o,i)=>{out+=walk(o,1,i===orphans.length-1);});
+  }
+  el.innerHTML=out;
+  el.querySelectorAll('.node').forEach(n=>n.addEventListener('click',()=>openDetail(n.dataset.slug)));
+}
+
+function renderPeers(){
+  const el=$('peers-body');
+  const peers=MANIFEST.peer_estates||[];
+  if(!peers.length){
+    el.innerHTML=`<div class="empty-peers">No peer estates registered yet.<div class="hint">Open a PR against <a href="https://github.com/sjgant80-hub/fallharbor">fallharbor</a> with your DID + manifest URL</div></div>`;
+    return;
+  }
+  el.innerHTML='<div class="grid">'+peers.map(p=>`<div class="card"><div class="top"><div class="nm">${esc(p.name||p.did)}</div><span class="badge">gen ${p.generation||'?'}</span></div><div class="desc"><code style="font-family:var(--mono);font-size:11px;color:var(--muted)">${esc(p.did)}</code></div><div class="caps"><a href="${esc(p.manifest_url)}" target="_blank" rel="noopener" style="font-family:var(--mono);font-size:11px">${esc(p.manifest_url)}</a></div></div>`).join('')+'</div>';
+}
+
+function renderAbout(){
+  const o=MANIFEST.operator||{};
+  $('operator-block').innerHTML=`<div><span class="k">Name</span>${esc(o.name)}</div><div style="margin-top:6px"><span class="k">Hub</span>${esc(o.hub)}</div><div style="margin-top:6px"><span class="k">DID</span>${esc(o.did)}</div>${o.repo_org?`<div style="margin-top:6px"><span class="k">Repo Org</span>${esc(o.repo_org)}</div>`:''}`;
+  const p=MANIFEST.provenance||{};
+  const sig=p.signature?`<span style="color:var(--sage)">✓ signed · ${esc(p.signature_algorithm||'Ed25519')}</span><br><code style="word-break:break-all;color:var(--muted);font-size:10.5px">${esc(p.signature)}</code>`:`<span class="unsigned">◇ unsigned · signature slot open for FallSignature</span>`;
+  $('prov-block').innerHTML=`<div><span class="k">Issued</span>${esc(p.issued)}</div><div style="margin-top:6px"><span class="k">Issuer</span>${esc(p.issuer)}</div><div style="margin-top:6px"><span class="k">Format</span>${esc(p.signature_format||'fallsignature-v1')}</div><div style="margin-top:6px"><span class="k">Signature</span>${sig}</div>`;
+}
+
+$('q').addEventListener('input',(e)=>{filters.q=e.target.value;renderDirectory();});
+$('vis-pills').querySelectorAll('.pill').forEach(p=>p.addEventListener('click',()=>{$('vis-pills').querySelectorAll('.pill').forEach(x=>x.classList.remove('on'));p.classList.add('on');filters.vis=p.dataset.vis;renderDirectory();}));
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
+  document.querySelectorAll('.view').forEach(x=>x.classList.remove('on'));
+  t.classList.add('on');$('view-'+t.dataset.view).classList.add('on');
+}));
+$('download-btn').addEventListener('click',()=>{
+  const blob=new Blob([JSON.stringify(MANIFEST,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='fallharbor-manifest.json';a.click();URL.revokeObjectURL(url);
+});
+document.addEventListener('keydown',(e)=>{if(e.key==='Escape')closeDetail();});
+if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{});}
+load();
+</script>
+</body>
+</html>

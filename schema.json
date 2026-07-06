@@ -1,0 +1,117 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://sjgant80-hub.github.io/fallharbor/schema.json",
+  "title": "FallHarbor Estate Manifest",
+  "description": "Sovereign registry format for AI-Native operator estates. Any operator can publish a manifest and be discovered as a peer.",
+  "type": "object",
+  "required": ["version", "operator", "tools", "lineage", "provenance"],
+  "properties": {
+    "$schema": { "type": "string", "format": "uri" },
+    "version": {
+      "type": "string",
+      "description": "Manifest schema version. Current: 1.0",
+      "pattern": "^\\d+\\.\\d+$"
+    },
+    "operator": {
+      "type": "object",
+      "required": ["did", "name", "hub"],
+      "properties": {
+        "did": { "type": "string", "description": "Decentralised identifier · did:key preferred" },
+        "name": { "type": "string" },
+        "hub": { "type": "string", "description": "Human-readable hub domain" },
+        "repo_org": { "type": "string", "description": "GitHub org or user hosting the tools" }
+      }
+    },
+    "generated": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When this manifest was produced"
+    },
+    "lineage": {
+      "type": "object",
+      "required": ["root", "generation"],
+      "properties": {
+        "root": {
+          "type": "string",
+          "description": "Ancestor seed the estate descends from (e.g. fallseed-doctrine)"
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "0 = root seed · 1 = first fork · 2+ = deeper forks"
+        },
+        "seed_version": { "type": "string" },
+        "cosmology": { "type": "string" }
+      }
+    },
+    "categories": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["slug", "name"],
+        "properties": {
+          "slug": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+          "name": { "type": "string" },
+          "desc": { "type": "string" }
+        }
+      }
+    },
+    "tools": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "slug", "category", "url", "repo", "license", "public", "shipped"],
+        "properties": {
+          "name": { "type": "string" },
+          "slug": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+          "category": { "type": "string" },
+          "description": { "type": "string" },
+          "url": { "type": "string", "format": "uri" },
+          "repo": { "type": "string", "format": "uri" },
+          "capabilities": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "license": { "type": "string" },
+          "public": { "type": "boolean" },
+          "shipped": { "type": "string", "format": "date" },
+          "glyph": { "type": "string" },
+          "forks_from": {
+            "type": ["string", "null"],
+            "description": "Slug of the tool this one forks from · null if root"
+          },
+          "forks": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Slugs of downstream forks"
+          }
+        }
+      }
+    },
+    "peer_estates": {
+      "type": "array",
+      "description": "Known other AI-Native operator DIDs · discovered peers",
+      "items": {
+        "type": "object",
+        "required": ["did", "manifest_url"],
+        "properties": {
+          "did": { "type": "string" },
+          "name": { "type": "string" },
+          "manifest_url": { "type": "string", "format": "uri" },
+          "generation": { "type": "integer" }
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["issued", "issuer"],
+      "properties": {
+        "issued": { "type": "string", "format": "date-time" },
+        "issuer": { "type": "string", "description": "DID of the issuer" },
+        "signature": { "type": ["string", "null"], "description": "base64-encoded Ed25519 signature over the manifest sans provenance.signature" },
+        "signature_algorithm": { "type": "string", "enum": ["Ed25519"] },
+        "signature_format": { "type": "string", "description": "FallSignature-compatible format identifier" }
+      }
+    }
+  }
+}
